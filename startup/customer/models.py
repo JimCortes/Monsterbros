@@ -1,12 +1,15 @@
 # Create your models here.
+from django.core.validators import MinLengthValidator
 from django.db import models
 
 class Customer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
+    customer_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
-    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    phone_number = models.CharField(max_length=20, blank=True, null=True,
+                    validators=[MinLengthValidator(10)])
     zip_code = models.CharField(max_length=20)
     unit = models.CharField(max_length=10, blank=True, null=True)
     address_line_1 = models.CharField(max_length=255)

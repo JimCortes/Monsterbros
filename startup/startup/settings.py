@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'customer'
+    'corsheaders',
+    'customer',
+    'booking'
     ####
 
 ]
@@ -51,7 +53,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
+
+
+CORS_ORIGIN_WHITELIST = (
+'http://localhost:5173',
+'http://localhost:8000',
+)
 
 ROOT_URLCONF = 'startup.urls'
 
