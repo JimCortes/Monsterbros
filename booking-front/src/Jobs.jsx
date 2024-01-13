@@ -1,9 +1,8 @@
 // Functional Component
 import BasicCard from './BasicCard';
 import Grid from '@mui/material/Grid';
-import EnhancedTable from './Tables';
-import AppoinmentsForm from './Appoinments';
-import AppoinmentsList from './AppoinmentsList';
+
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -55,22 +54,22 @@ const Jobs = () => {
     <>
     <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}  sx={{ marginBottom: 3 }}>
       {appoinments.map((appoinment) => (
-        <Grid item xs={12} sm={6} md={4} key={appoinment.appointment_id}>
+        <Grid item xs={12} sm={6} md={4} key={appoinment.id}>
           <BasicCard
-            customer={appoinment.customer}
+            customer={appoinment.customer_data.name + ' '+ appoinment.customer_data.last_name}
             truck={appoinment.truck}
             appointment_time={formatDate(appoinment.appointment_time)}
             status={appoinment.status}
+            phone={appoinment.customer_data.phone}
+            email={appoinment.customer_data.email}
+            address={appoinment.customer_data.address}
+            notes={appoinment.notes}
           />
       
         </Grid>
       ))}
-         
     </Grid>
-    <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}sx={{ overflowX: 'auto' }}>
-        <Grid item xs={12} sm={6} md={12}>
-        </Grid>
-    </Grid>
+
     </>
   );
 };

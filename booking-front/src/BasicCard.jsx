@@ -11,8 +11,11 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@mui/system';
-
-
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import EmailIcon from '@mui/icons-material/Email';
+import TodayIcon from '@mui/icons-material/Today';
+import PersonIcon from '@mui/icons-material/Person';
+import NotesIcon from '@mui/icons-material/Notes';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -27,7 +30,7 @@ const ExpandMore = styled((props) => {
 
 
 
-const BasicCard = ({ truck, customer, appointment_time, status }) => {
+const BasicCard = ({ truck, customer, appointment_time, status, phone, email, address, notes }) => {
   const theme = useTheme();
 
   
@@ -38,33 +41,60 @@ const BasicCard = ({ truck, customer, appointment_time, status }) => {
   };
  
   return (
-    <Card sx={{ minWidth: 275, textAlign: 'center', display: 'flex',flexDirection: 'column' }}>
+    <Card sx={{ minWidth: 275, textAlign: 'center', 
+              display: 'flex',flexDirection: 'column' }}>
       <CardContent sx={{ display: 'flex', flexDirection: 'column'}}>
       <Typography variant="h6" component="div" 
                   sx={{ 
                         mb: 2, 
                         textAlign: 'left', 
-                        color: theme.palette.secondary.main, }}>         
-          {appointment_time} 
+                        }}> 
+                           
+                        <TodayIcon sx={{color: theme.palette.secondary.main}}/> {appointment_time} 
         </Typography>
         <Typography  variant="h6" component="div" 
-                     sx={{mb: 2, 
+                     sx={{ 
                         textAlign: 'left', 
 
                      }}>
-         {customer} 
+        <PersonIcon sx={{color: theme.palette.secondary.main}}/>{customer}
         </Typography>
-        <Typography  variant="body" component="div" sx={{ fontSize: 28, mb: 2 }}>
-          {appointment_time} 
+        <Typography  variant="body" component="div" 
+                     sx={{mb: 0, 
+                        textAlign: 'left',
+
+                     }}>
+          <EmailIcon sx={{color: theme.palette.secondary.main}}/> {email}
         </Typography>
-        <Typography  variant="body" component="div" sx={{ fontSize: 28, mb: 2 }}>
-          Status: {status}
+        <Typography  variant="body" component="div" 
+                     sx={{mb: 1, 
+                        textAlign: 'left', 
+
+                     }}>
+         <LocationOnIcon sx={{color: theme.palette.secondary.main}}/> {address}
         </Typography>
+        <Typography variant="body" component="div" sx={{textAlign: 'left' }}>
+          <NotesIcon sx={{ color: theme.palette.secondary.main }} />
+          {notes.length > 0 && (
+        <div>
+          {notes[notes.length - 1].user} : {notes[notes.length - 1].notes}
+        </div>
+  )}
+        </Typography>
+
+    
       </CardContent>
-      <CardActions  component="div" sx={{  alignSelf: 'flex-end', marginTop: 'auto' }}>
-         <Collapse in={expanded} timeout="auto" unmountOnExit></Collapse>
-        <Button size="small">Modify</Button>
-        <Button size="small">Details</Button>
+      <CardActions  component="div" 
+                    sx={{  alignSelf: 'flex-end', marginTop: 'auto' }}>
+         <Button variant="outlined" size="small"
+             sx={{ marginRight: 1 }}>
+              call
+            </Button>
+          <Button variant="outlined" size="small"
+             sx={{ marginRight: 0 }}>
+              map
+          </Button>
+    
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
@@ -76,6 +106,14 @@ const BasicCard = ({ truck, customer, appointment_time, status }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
+        <Typography variant="body" component="div" sx={{textAlign: 'left' }}>
+          <NotesIcon sx={{ color: theme.palette.secondary.main }} />
+            {notes.map((note, index) => (
+              <div key={index}>
+                {note.user} : {note.notes}
+              </div>
+            ))}
+        </Typography>
           <Typography paragraph>Method:</Typography>
           <Typography paragraph>
             Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
